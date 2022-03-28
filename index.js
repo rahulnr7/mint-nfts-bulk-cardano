@@ -1,7 +1,14 @@
 import CardanoWasm from "@emurgo/cardano-serialization-lib-nodejs";
 import axios from "axios";
 
-const mintNft = async (privateKey, assetName, description) => {
+const mintNft = async (
+  privateKey,
+  policy,
+  assetName,
+  description,
+  imageUrl,
+  mediaType
+) => {
   const FEE = 300000;
 
   const publicKey = privateKey.to_public();
@@ -10,6 +17,14 @@ const mintNft = async (privateKey, assetName, description) => {
     CardanoWasm.NetworkInfo.testnet().network_id(),
     CardanoWasm.StakeCredential.from_keyhash(publicKey.hash()),
     CardanoWasm.StakeCredential.from_keyhash(publicKey.hash())
+  ).to_address();
+
+  const policyPubKey = policy.privateKey.to_public();
+
+  const policyAddr = CardanoWasm.BaseAddress.new(
+    CardanoWasm.NetworkInfo.testnet().network_id(),
+    CardanoWasm.StakeCredential.from_keyhash(policyPubKey.hash()),
+    CardanoWasm.StakeCredential.from_keyhash(policyPubKey.hash())
   ).to_address();
 
   console.log(`ADDR: ${addr.to_bech32()}`);
@@ -23,9 +38,11 @@ const mintNft = async (privateKey, assetName, description) => {
 
   let utxo = null;
 
-  for (const utxoEntry of utxoRes.data) {
-    if (utxoEntry.amount > FEE) {
-      utxo = utxoEntry;
+  if (utxoRes.data) {
+    for (const utxoEntry of utxoRes.data) {
+      if (utxoEntry.amount > FEE) {
+        utxo = utxoEntry;
+      }
     }
   }
 
@@ -38,8 +55,6 @@ const mintNft = async (privateKey, assetName, description) => {
   const { data: slotData } = await axios.get(
     "https://testnet-backend.yoroiwallet.com/api/v2/bestblock"
   );
-
-  const ttl = slotData.globalSlot + 60 * 60 * 2; // two hours from now
 
   const txBuilder = CardanoWasm.TransactionBuilder.new(
     CardanoWasm.TransactionBuilderConfigBuilder.new()
@@ -59,14 +74,22 @@ const mintNft = async (privateKey, assetName, description) => {
 
   const scripts = CardanoWasm.NativeScripts.new();
 
-  const keyHash = CardanoWasm.BaseAddress.from_address(addr)
+  const policyKeyHash = CardanoWasm.BaseAddress.from_address(policyAddr)
     .payment_cred()
     .to_keyhash();
 
+  console.log(
+    `POLICY_KEYHASH: ${Buffer.from(policyKeyHash.to_bytes()).toString("hex")}`
+  );
+
   const keyHashScript = CardanoWasm.NativeScript.new_script_pubkey(
-    CardanoWasm.ScriptPubkey.new(keyHash)
+    CardanoWasm.ScriptPubkey.new(policyKeyHash)
   );
   scripts.add(keyHashScript);
+
+  const ttl = policy.ttl || slotData.globalSlot + 60 * 60 * 2; // two hours from now
+
+  console.log(`POLICY_TTL: ${ttl}`);
 
   const timelock = CardanoWasm.TimelockExpiry.new(ttl);
   const timelockScript = CardanoWasm.NativeScript.new_timelock_expiry(timelock);
@@ -76,8 +99,11 @@ const mintNft = async (privateKey, assetName, description) => {
     CardanoWasm.ScriptAll.new(scripts)
   );
 
+  const privKeyHash = CardanoWasm.BaseAddress.from_address(addr)
+    .payment_cred()
+    .to_keyhash();
   txBuilder.add_key_input(
-    keyHash,
+    privKeyHash,
     CardanoWasm.TransactionInput.new(
       CardanoWasm.TransactionHash.from_bytes(Buffer.from(utxo.tx_hash, "hex")),
       utxo.tx_index
@@ -101,8 +127,8 @@ const mintNft = async (privateKey, assetName, description) => {
       [assetName]: {
         name: assetName,
         description,
-        image: "ipfs://QmZYPGQ6RSEmP2uHcL2pvHLNzwYrrUvjB6WT1zKGN2cujc",
-        mediaType: "image/jpeg",
+        image: imageUrl,
+        mediaType,
       },
     },
   };
@@ -124,8 +150,10 @@ const mintNft = async (privateKey, assetName, description) => {
 
   const witnesses = CardanoWasm.TransactionWitnessSet.new();
   const vkeyWitnesses = CardanoWasm.Vkeywitnesses.new();
+  vkeyWitnesses.add(CardanoWasm.make_vkey_witness(txHash, policy.privateKey));
   vkeyWitnesses.add(CardanoWasm.make_vkey_witness(txHash, privateKey));
   witnesses.set_vkeys(vkeyWitnesses);
+  witnesses.set_native_scripts;
   const witnessScripts = CardanoWasm.NativeScripts.new();
   witnessScripts.add(mintScript);
   witnesses.set_native_scripts(witnessScripts);
@@ -158,8 +186,33 @@ const mintNft = async (privateKey, assetName, description) => {
   }
 };
 
-const privateKey = CardanoWasm.PrivateKey.from_bech32(
-  "ed25519_sk1fde2u8u2qme8uau5ac3w6c082gvtnmxt6uke2w8e07xwzewxee3q3n0f8e"
-);
+try {
+  const privateKey = CardanoWasm.PrivateKey.from_bech32(
+    "ed25519_sk1fde2u8u2qme8uau5ac3w6c082gvtnmxt6uke2w8e07xwzewxee3q3n0f8e"
+    //"ed25519_sk18j0a6704zyerm6dsj6p2fp8juw5m43rfgk0y84jnm7w5khs4dpqquewh43"
+  );
 
-await mintNft(privateKey, "asdNFT", "some descr");
+  console.log(`PRIVATE KEY: ${privateKey.to_bech32()}`);
+
+  const policyPrivateKey = CardanoWasm.PrivateKey.from_bech32(
+    "ed25519_sk1q96x2g66j5g7u5wydl7kcagk0h8upxznt3gj48h6njqthkyr7faqxmnnte"
+  );
+
+  console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
+
+  await mintNft(
+    privateKey,
+    {
+      privateKey: policyPrivateKey,
+      // pass null here to get automatic ttl for policy
+      // and paste the POLICY_TTL output you get in console to here to mint with same policy
+      ttl: 54136513,
+    },
+    "asdNFT3",
+    "some descr",
+    "ipfs://QmZYPGQ6RSEmP2uHcL2pvHLNzwYrrUvjB6WT1zKGN2cujc",
+    "image/jpeg"
+  );
+} catch (err) {
+  console.error(`failed to mint nft: ${err.toString()}`);
+}
