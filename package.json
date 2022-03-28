@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "fmt": "prettier --write index.js"
+    "fmt": "prettier --write index.js",
+    "mint": "node index.js"
   },
   "author": "",
   "license": "ISC",
