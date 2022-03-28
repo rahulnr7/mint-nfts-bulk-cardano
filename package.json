@@ -1,0 +1,19 @@
+{
+  "name": "cardano-mint-nft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "fmt": "prettier --write index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emurgo/cardano-serialization-lib-nodejs": "^10.0.4",
+    "axios": "^0.26.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "prettier": "^2.6.0"
+  }
+}
