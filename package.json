@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@emurgo/cardano-serialization-lib-nodejs": "^10.0.4",
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "cbor": "^8.1.0"
   },
   "type": "module",
   "devDependencies": {

@@ -1,5 +1,6 @@
 import CardanoWasm from "@emurgo/cardano-serialization-lib-nodejs";
 import axios from "axios";
+import cbor from "cbor";
 
 const mintNft = async (
   privateKey,
@@ -198,6 +199,14 @@ try {
     "ed25519_sk1q96x2g66j5g7u5wydl7kcagk0h8upxznt3gj48h6njqthkyr7faqxmnnte"
   );
 
+  /* read key from .skey file exported with cardano-cli
+  const policyPrivateKey = CardanoWasm.PrivateKey.from_normal_bytes(
+    cbor.decodeFirstSync(
+      "582009ca7f508dd5a5f9823d367e98170f25606799f49ae7363a47a11d7d3502c91f"
+    )
+  );
+  */
+
   console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
 
   await mintNft(
@@ -208,9 +217,9 @@ try {
       // and paste the POLICY_TTL output you get in console to here to mint with same policy
       ttl: 54136513,
     },
-    "asdNFT3",
-    "some descr",
-    "ipfs://QmZYPGQ6RSEmP2uHcL2pvHLNzwYrrUvjB6WT1zKGN2cujc",
+    "asdNFT5",
+    "some descr this is a new nft with same policy",
+    "ipfs://QmNhmDPJMgdsFRM9HyiQEJqrKkpsWFshqES8mPaiFRq9Zk",
     "image/jpeg"
   );
 } catch (err) {
