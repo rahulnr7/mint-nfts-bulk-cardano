@@ -195,17 +195,17 @@ try {
 
   console.log(`PRIVATE KEY: ${privateKey.to_bech32()}`);
 
+  /*
   const policyPrivateKey = CardanoWasm.PrivateKey.from_bech32(
     "ed25519_sk1q96x2g66j5g7u5wydl7kcagk0h8upxznt3gj48h6njqthkyr7faqxmnnte"
   );
+  */
 
-  /* read key from .skey file exported with cardano-cli
   const policyPrivateKey = CardanoWasm.PrivateKey.from_normal_bytes(
     cbor.decodeFirstSync(
       "582009ca7f508dd5a5f9823d367e98170f25606799f49ae7363a47a11d7d3502c91f"
     )
   );
-  */
 
   console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
 
@@ -215,7 +215,7 @@ try {
       privateKey: policyPrivateKey,
       // pass null here to get automatic ttl for policy
       // and paste the POLICY_TTL output you get in console to here to mint with same policy
-      ttl: 54136513,
+      ttl: null,
     },
     "asdNFT5",
     "some descr this is a new nft with same policy",
