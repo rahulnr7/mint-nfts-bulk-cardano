@@ -57,6 +57,8 @@ const mintNft = async (
     "https://testnet-backend.yoroiwallet.com/api/v2/bestblock"
   );
 
+  const ttl = slotData.globalSlot + 60 * 60 * 2;
+
   const txBuilder = CardanoWasm.TransactionBuilder.new(
     CardanoWasm.TransactionBuilderConfigBuilder.new()
       .fee_algo(
@@ -88,11 +90,11 @@ const mintNft = async (
   );
   scripts.add(keyHashScript);
 
-  const ttl = policy.ttl || slotData.globalSlot + 60 * 60 * 2; // two hours from now
+  const policyTtl = policy.ttl || ttl; // two hours from now
 
-  console.log(`POLICY_TTL: ${ttl}`);
+  console.log(`POLICY_TTL: ${policyTtl}`);
 
-  const timelock = CardanoWasm.TimelockExpiry.new(ttl);
+  const timelock = CardanoWasm.TimelockExpiry.new(policyTtl);
   const timelockScript = CardanoWasm.NativeScript.new_timelock_expiry(timelock);
   scripts.add(timelockScript);
 
@@ -136,7 +138,11 @@ const mintNft = async (
 
   console.log(`METADATA: ${JSON.stringify(metadata, null, 4)}`);
 
-  txBuilder.set_ttl(ttl);
+  const txTtl = ttl > policyTtl ? policyTtl : ttl;
+
+  console.log(`TX_TTL: ${txTtl}`);
+
+  txBuilder.set_ttl(txTtl);
   txBuilder.add_json_metadatum(
     CardanoWasm.BigNum.from_str("721"),
     JSON.stringify(metadata)
@@ -189,8 +195,8 @@ const mintNft = async (
 
 try {
   const privateKey = CardanoWasm.PrivateKey.from_bech32(
-    "ed25519_sk1fde2u8u2qme8uau5ac3w6c082gvtnmxt6uke2w8e07xwzewxee3q3n0f8e"
-    //"ed25519_sk18j0a6704zyerm6dsj6p2fp8juw5m43rfgk0y84jnm7w5khs4dpqquewh43"
+    //"ed25519_sk1fde2u8u2qme8uau5ac3w6c082gvtnmxt6uke2w8e07xwzewxee3q3n0f8e"
+    "ed25519_sk18j0a6704zyerm6dsj6p2fp8juw5m43rfgk0y84jnm7w5khs4dpqquewh43"
   );
 
   console.log(`PRIVATE KEY: ${privateKey.to_bech32()}`);
