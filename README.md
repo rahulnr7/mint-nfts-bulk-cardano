@@ -1,6 +1,6 @@
 # cardano-mint-nft
 
-An example of minting nft using cardano-serialization-lib and yoroi-backend to mint an nft to wallet
+An example of minting nft using cardano-serialization-lib and yoroi-backend
 
 ### Commands
 - fmt: format the code
