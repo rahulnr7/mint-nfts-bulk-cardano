@@ -30,6 +30,7 @@ const mintNft = async (
 
   console.log(`ADDR: ${addr.to_bech32()}`);
 
+  // get utxos for our address and select one that is probably big enough to pay the tx fee
   const utxoRes = await axios.post(
     "https://testnet-backend.yoroiwallet.com/api/txs/utxoForAddresses",
     {
@@ -53,6 +54,7 @@ const mintNft = async (
 
   console.log(`UTXO: ${JSON.stringify(utxo, null, 4)}`);
 
+  // get current global slot from yoroi backend
   const { data: slotData } = await axios.get(
     "https://testnet-backend.yoroiwallet.com/api/v2/bestblock"
   );
@@ -85,6 +87,7 @@ const mintNft = async (
     `POLICY_KEYHASH: ${Buffer.from(policyKeyHash.to_bytes()).toString("hex")}`
   );
 
+  // add key hash script so only people with policy key can mint assets using this policyId
   const keyHashScript = CardanoWasm.NativeScript.new_script_pubkey(
     CardanoWasm.ScriptPubkey.new(policyKeyHash)
   );
@@ -94,6 +97,7 @@ const mintNft = async (
 
   console.log(`POLICY_TTL: ${policyTtl}`);
 
+  // add timelock so policy is locked after this slot
   const timelock = CardanoWasm.TimelockExpiry.new(policyTtl);
   const timelockScript = CardanoWasm.NativeScript.new_timelock_expiry(timelock);
   scripts.add(timelockScript);
@@ -138,6 +142,7 @@ const mintNft = async (
 
   console.log(`METADATA: ${JSON.stringify(metadata, null, 4)}`);
 
+  // transaction ttl can't be later than policy ttl
   const txTtl = ttl > policyTtl ? policyTtl : ttl;
 
   console.log(`TX_TTL: ${txTtl}`);
@@ -155,6 +160,7 @@ const mintNft = async (
 
   console.log(`TX_HASH: ${Buffer.from(txHash.to_bytes()).toString("hex")}`);
 
+  // sign the tx using the policy key and main key
   const witnesses = CardanoWasm.TransactionWitnessSet.new();
   const vkeyWitnesses = CardanoWasm.Vkeywitnesses.new();
   vkeyWitnesses.add(CardanoWasm.make_vkey_witness(txHash, policy.privateKey));
@@ -167,6 +173,7 @@ const mintNft = async (
 
   const unsignedTx = txBuilder.build_tx();
 
+  // create signed transaction
   const tx = CardanoWasm.Transaction.new(
     unsignedTx.body(),
     witnesses,
@@ -175,6 +182,7 @@ const mintNft = async (
 
   const signedTx = Buffer.from(tx.to_bytes()).toString("base64");
 
+  // submit the transaction using yoroi backend
   try {
     const { data } = await axios.post(
       "https://testnet-backend.yoroiwallet.com/api/txs/signed",
@@ -207,6 +215,7 @@ try {
   );
   */
 
+  // import policy key from a .policy.skey file
   const policyPrivateKey = CardanoWasm.PrivateKey.from_normal_bytes(
     cbor.decodeFirstSync(
       "582009ca7f508dd5a5f9823d367e98170f25606799f49ae7363a47a11d7d3502c91f"
@@ -216,17 +225,17 @@ try {
   console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
 
   await mintNft(
-    privateKey,
+    privateKey, // main key
     {
-      privateKey: policyPrivateKey,
+      privateKey: policyPrivateKey, // policy key
       // pass null here to get automatic ttl for policy
       // and paste the POLICY_TTL output you get in console to here to mint with same policy
-      ttl: null,
+      ttl: null, // policy ttl
     },
-    "asdNFT5",
-    "some descr this is a new nft with same policy",
-    "ipfs://QmNhmDPJMgdsFRM9HyiQEJqrKkpsWFshqES8mPaiFRq9Zk",
-    "image/jpeg"
+    "asdNFT5", // assetName
+    "some descr this is a new nft with same policy", // description
+    "ipfs://QmNhmDPJMgdsFRM9HyiQEJqrKkpsWFshqES8mPaiFRq9Zk", // image url
+    "image/jpeg" // mediaType
   );
 } catch (err) {
   console.error(`failed to mint nft: ${err.toString()}`);
