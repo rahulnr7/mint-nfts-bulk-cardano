@@ -215,7 +215,7 @@ try {
   );
   */
 
-  // import policy key from a .policy.skey file
+  // import policy key from a .skey file
   const policyPrivateKey = CardanoWasm.PrivateKey.from_normal_bytes(
     cbor.decodeFirstSync(
       "582009ca7f508dd5a5f9823d367e98170f25606799f49ae7363a47a11d7d3502c91f"
