@@ -59,7 +59,7 @@ const mintNft = async (
     "https://testnet-backend.yoroiwallet.com/api/v2/bestblock"
   );
 
-  const ttl = slotData.globalSlot + 60 * 60 * 2;  // two hours from now
+  const ttl = slotData.globalSlot + 60 * 60 * 2; // two hours from now
 
   const txBuilder = CardanoWasm.TransactionBuilder.new(
     CardanoWasm.TransactionBuilderConfigBuilder.new()
@@ -105,6 +105,12 @@ const mintNft = async (
   const mintScript = CardanoWasm.NativeScript.new_script_all(
     CardanoWasm.ScriptAll.new(scripts)
   );
+
+  /* mintScript can be a single script instead of an array of scripts
+  const mintScript = CardanoWasm.NativeScript.new_script_pubkey(
+    CardanoWasm.ScriptPubkey.new(policyKeyHash)
+  );
+  */
 
   const privKeyHash = CardanoWasm.BaseAddress.from_address(addr)
     .payment_cred()
