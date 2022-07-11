@@ -1,17 +1,15 @@
 import CardanoWasm, { SingleHostAddr } from "@emurgo/cardano-serialization-lib-nodejs";
 import axios from "axios";
 import cbor from "cbor";
+import { createMetadata } from "./createJson.js";
 
 const mintNft = async (
   privateKey,
   policy,
-  assetName,
+  assetNamePfx,
   description,
-  imageUrl,
   mediaType,
   receiverAddr,
-  collectionName,
-  authorName,
 ) => {
   const FEE = 300000;
 
@@ -129,32 +127,39 @@ const mintNft = async (
   
   //const receiver = "addr_test1qp5u4p74tpx2m87ddmfk4gzm2j2nmlrterxagtrytwtzupzkujqk4kx4fmgcyfkxk0ap0uv043cnl44v7g9s9kz4lr7sz4c8tx";
   const receiver = CardanoWasm.Address.from_bech32(receiverAddr);
-  txBuilder.add_mint_asset_and_output_min_required_coin(
-    mintScript,
-    CardanoWasm.AssetName.new(Buffer.from(assetName)),
-    CardanoWasm.Int.new_i32(1),
-    CardanoWasm.TransactionOutputBuilder.new().with_address(receiver).next()
-  );
 
   const policyId = Buffer.from(mintScript.hash().to_bytes()).toString("hex");
 
   console.log(`POLICY_ID: ${policyId}`);
 
-  const metadata = {
-    [policyId]: {
-      [assetName]: {
-        name: assetName,
-        description,
-        image: imageUrl,
-        mediaType,
-        collection: collectionName,
-        Artists: authorName,
-      },
-    },
-  };
+  // const metadata = {
+  //   [policyId]: {
+  //     [assetName]: {
+  //       name: assetName,
+  //       description,
+  //       image: imageUrl,
+  //       mediaType,
+  //       collection: collectionName,
+  //       Artists: authorName,
+  //     },
+  //   },
+  // };
 
+  const context = createMetadata(policyId, assetNamePfx, description, mediaType);
+  const metadata = context.metadataObj;
+  const countNFT = context.countNFT;
 
   console.log(`METADATA: ${JSON.stringify(metadata, null, 2)}`);
+
+  for (let i=0; i<countNFT; i++){
+    let assetName = `${assetNamePfx}${i}`;
+    txBuilder.add_mint_asset_and_output_min_required_coin(
+      mintScript,
+      CardanoWasm.AssetName.new(Buffer.from(assetName)),
+      CardanoWasm.Int.new_i32(1),
+      CardanoWasm.TransactionOutputBuilder.new().with_address(receiver).next()
+    );
+  }
 
   // transaction ttl can't be later than policy ttl
   const txTtl = ttl > policyTtl ? policyTtl : ttl;
@@ -244,13 +249,10 @@ try {
       // and paste the POLICY_TTL output you get in console to here to mint with same policy
       ttl: null, // policy ttl
     },
-    "EMR_Ofr_6", // assetName
-    "An example for metatdata field : Artists", // description
-    "ipfs://QmQHfeH5cySgrjRm2DdY8KPmFRy9y83yw4aGWevzWPZoxx", // image url
+    "Krimps_Ser1_", // assetName Prefix. will be appended by 1,2,3,...
+    "An example description", // description
     "image/png", // mediaType
-    "addr_test1qq2lvjqjvs390nyh2tgajjnt7dm009ah03ry9aw7fwlh3pa0grqyjvc0phx8cmhkqzuwkf37prh2lcczlv9wxe0qqvzspk9fjz", //receiver address//KDEX-6750
-    "Random", //collection name
-    "Donald Bill"//author name
+    "addr_test1qq5vsh0jmf8wws5lmds77fuq06jf4vummsmkyq5azjfsc6wg42pclf2zm5csxpfnxl8xctuv5dvy5r9lpx4hhn4v354sz5x6na" //receiver address//test1 wallet
   );
 } catch (err) {
   console.error(`failed to mint nft: ${err.toString()}`);

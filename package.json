@@ -12,7 +12,8 @@
   "dependencies": {
     "@emurgo/cardano-serialization-lib-nodejs": "^10.0.4",
     "axios": "^0.26.1",
-    "cbor": "^8.1.0"
+    "cbor": "^8.1.0",
+    "path": "^0.12.7"
   },
   "type": "module",
   "devDependencies": {

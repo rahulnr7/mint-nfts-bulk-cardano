@@ -1,6 +1,9 @@
 import CardanoWasm, { SingleHostAddr } from "@emurgo/cardano-serialization-lib-nodejs";
 import axios from "axios";
 import cbor from "cbor";
+import fs from "fs";
+import events from 'events';
+import readline  from 'readline';
 
 const mintNft = async (
   privateKey,
@@ -148,11 +151,10 @@ const mintNft = async (
         image: imageUrl,
         mediaType,
         collection: collectionName,
-        Artists: authorName,
+        author: authorName,
       },
     },
   };
-
 
   console.log(`METADATA: ${JSON.stringify(metadata, null, 2)}`);
 
@@ -236,23 +238,40 @@ try {
 
   console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
 
-  await mintNft(
-    privateKey, // main key
-    {
-      privateKey: policyPrivateKey, // policy key
-      // pass null here to get automatic ttl for policy
-      // and paste the POLICY_TTL output you get in console to here to mint with same policy
-      ttl: null, // policy ttl
-    },
-    "EMR_Ofr_6", // assetName
-    "An example for metatdata field : Artists", // description
-    "ipfs://QmQHfeH5cySgrjRm2DdY8KPmFRy9y83yw4aGWevzWPZoxx", // image url
-    "image/png", // mediaType
-    "addr_test1qq2lvjqjvs390nyh2tgajjnt7dm009ah03ry9aw7fwlh3pa0grqyjvc0phx8cmhkqzuwkf37prh2lcczlv9wxe0qqvzspk9fjz", //receiver address//KDEX-6750
-    "Random", //collection name
-    "Donald Bill"//author name
-  );
+  const filePath = '/Users/rahulnair/projects/cardano-mint-nft/log.txt';     
+  var array = fs.readFileSync(filePath).toString().split("\n");
+  console.log('File Size : ', array.length);
+  for(let i=0; i<array.length; i++ ) {
+        console.log('***** Minting NFT number : ', i+1);
+        console.log('\n##### Processing image IPFS: ', array[i]);
+
+        if(i != 0) await sleep(25000);  
+        let line = array[i];
+        let assetName = `Silent_Lambs_${i}`
+        await mintNft(
+            privateKey, // main key
+            {
+            privateKey: policyPrivateKey, // policy key
+            // pass null here to get automatic ttl for policy
+            // and paste the POLICY_TTL output you get in console to here to mint with same policy
+            ttl: 61024275, // policy ttl
+            },
+            `${assetName}`, // assetName
+            "The unique description.", // description
+            `${line}`, // image url
+            "image/png", // mediaType
+            "addr_test1qzceay0mzqrnae9gy8tvqp5l2qkve3ttlzvlyqzyt3x9r72kujqk4kx4fmgcyfkxk0ap0uv043cnl44v7g9s9kz4lr7smdfyzt", //receiver address//TTEO-0080
+            "Paleo", //collection name
+            "Morgan Dcruz"//author
+        );
+    }
+
 } catch (err) {
   console.error(`failed to mint nft: ${err.toString()}`);
+}
+
+
+async function sleep(millis) {
+    return new Promise(resolve => setTimeout(resolve, millis));
 }
 
