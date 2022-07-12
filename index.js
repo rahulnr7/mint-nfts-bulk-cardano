@@ -12,6 +12,8 @@ const mintNft = async (
   receiverAddr,
   collectionName,
   authorName,
+  metadata_A,
+  metadata_C,
 ) => {
   const FEE = 300000;
 
@@ -147,8 +149,8 @@ const mintNft = async (
         description,
         image: imageUrl,
         mediaType,
-        collection: collectionName,
-        Artists: authorName,
+        [metadata_C]: collectionName,
+        [metadata_A]: authorName,
       },
     },
   };
@@ -244,13 +246,15 @@ try {
       // and paste the POLICY_TTL output you get in console to here to mint with same policy
       ttl: null, // policy ttl
     },
-    "EMR_Ofr_6", // assetName
-    "An example for metatdata field : Artists", // description
+    "RX_Art_1", // assetName
+    "An example for metatdata field : artist", // description
     "ipfs://QmQHfeH5cySgrjRm2DdY8KPmFRy9y83yw4aGWevzWPZoxx", // image url
     "image/png", // mediaType
     "addr_test1qq2lvjqjvs390nyh2tgajjnt7dm009ah03ry9aw7fwlh3pa0grqyjvc0phx8cmhkqzuwkf37prh2lcczlv9wxe0qqvzspk9fjz", //receiver address//KDEX-6750
     "Random", //collection name
-    "Donald Bill"//author name
+    "Donald Bill",//author name
+    "artist",
+    "collection"
   );
 } catch (err) {
   console.error(`failed to mint nft: ${err.toString()}`);
