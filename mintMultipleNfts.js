@@ -221,15 +221,14 @@ const mintNft = async (
 };
 
 
-
 try {
-  
    const privateKey = CardanoWasm.PrivateKey.from_normal_bytes(
     cbor.decodeFirstSync(
       "58209da681125617618d533b3cedb7491d039cd84daa3c59aff66c9c436825204d40"
     )
   );
 
+  
   console.log(`PRIVATE KEY: ${privateKey.to_bech32()}`);
 
   // import policy key from a .skey file
@@ -249,7 +248,7 @@ try {
       // and paste the POLICY_TTL output you get in console to here to mint with same policy
       ttl: null, // policy ttl
     },
-    "Krimps_Ser1_", // assetName Prefix. will be appended by 1,2,3,...
+    "KATE_Ser1_", // assetName Prefix. will be appended by 1,2,3,...
     "An example description", // description
     "image/png", // mediaType
     "addr_test1qq5vsh0jmf8wws5lmds77fuq06jf4vummsmkyq5azjfsc6wg42pclf2zm5csxpfnxl8xctuv5dvy5r9lpx4hhn4v354sz5x6na" //receiver address//test1 wallet
