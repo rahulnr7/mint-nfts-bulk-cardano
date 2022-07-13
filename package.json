@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "fmt": "prettier --write index.js",
-    "mint": "node index.js"
+    "fmt": "prettier --write \"**/*.js\"",
+    "mint": "node index.js",
+    "mintBulk" : "node mintNFTsmMain.js"
+
   },
   "author": "",
   "license": "ISC",
@@ -13,10 +15,12 @@
     "@emurgo/cardano-serialization-lib-nodejs": "^10.0.4",
     "axios": "^0.26.1",
     "cbor": "^8.1.0",
+    "mime": "^3.0.0",
+    "nft.storage": "^6.4.0",
     "path": "^0.12.7"
   },
   "type": "module",
   "devDependencies": {
-    "prettier": "^2.6.0"
+    "prettier": "^2.7.1"
   }
 }

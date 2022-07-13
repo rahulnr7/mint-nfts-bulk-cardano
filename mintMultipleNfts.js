@@ -1,7 +1,8 @@
-import CardanoWasm, { SingleHostAddr } from "@emurgo/cardano-serialization-lib-nodejs";
-import axios from "axios";
-import cbor from "cbor";
-import { createMetadata } from "./createJson.js";
+import CardanoWasm, {SingleHostAddr} from '@emurgo/cardano-serialization-lib-nodejs';
+import axios from 'axios';
+import cbor from 'cbor';
+import {createMetadata} from './createJson.js';
+import * as utils from './utils.js';
 
 const mintNft = async (
   privateKey,
@@ -10,6 +11,8 @@ const mintNft = async (
   description,
   mediaType,
   receiverAddr,
+  countOfNftsInTxn,
+  filePathIPFS,
 ) => {
   const FEE = 300000;
 
@@ -18,7 +21,7 @@ const mintNft = async (
   const addr = CardanoWasm.BaseAddress.new(
     CardanoWasm.NetworkInfo.testnet().network_id(),
     CardanoWasm.StakeCredential.from_keyhash(publicKey.hash()),
-    CardanoWasm.StakeCredential.from_keyhash(publicKey.hash())
+    CardanoWasm.StakeCredential.from_keyhash(publicKey.hash()),
   ).to_address();
 
   const policyPubKey = policy.privateKey.to_public();
@@ -26,18 +29,15 @@ const mintNft = async (
   const policyAddr = CardanoWasm.BaseAddress.new(
     CardanoWasm.NetworkInfo.testnet().network_id(),
     CardanoWasm.StakeCredential.from_keyhash(policyPubKey.hash()),
-    CardanoWasm.StakeCredential.from_keyhash(policyPubKey.hash())
+    CardanoWasm.StakeCredential.from_keyhash(policyPubKey.hash()),
   ).to_address();
 
   console.log(`ADDR: ${addr.to_bech32()}`);
 
   // get utxos for our address and select one that is probably big enough to pay the tx fee
-  const utxoRes = await axios.post(
-    "https://testnet-backend.yoroiwallet.com/api/txs/utxoForAddresses",
-    {
-      addresses: [addr.to_bech32()],
-    }
-  );
+  const utxoRes = await axios.post('https://testnet-backend.yoroiwallet.com/api/txs/utxoForAddresses', {
+    addresses: [addr.to_bech32()],
+  });
 
   let utxo = null;
 
@@ -50,48 +50,35 @@ const mintNft = async (
   }
 
   if (utxo === null) {
-    throw new Error("no utxo found with sufficient ADA.");
+    throw new Error('no utxo found with sufficient ADA.');
   }
 
   console.log(`UTXO: ${JSON.stringify(utxo, null, 4)}`);
 
   // get current global slot from yoroi backend
-  const { data: slotData } = await axios.get(
-    "https://testnet-backend.yoroiwallet.com/api/v2/bestblock"
-  );
+  const {data: slotData} = await axios.get('https://testnet-backend.yoroiwallet.com/api/v2/bestblock');
 
   const ttl = slotData.globalSlot + 60 * 60 * 2; // two hours from now
 
   const txBuilder = CardanoWasm.TransactionBuilder.new(
     CardanoWasm.TransactionBuilderConfigBuilder.new()
-      .fee_algo(
-        CardanoWasm.LinearFee.new(
-          CardanoWasm.BigNum.from_str("44"),
-          CardanoWasm.BigNum.from_str("155381")
-        )
-      )
-      .coins_per_utxo_word(CardanoWasm.BigNum.from_str("34482"))
-      .pool_deposit(CardanoWasm.BigNum.from_str("500000000"))
-      .key_deposit(CardanoWasm.BigNum.from_str("2000000"))
+      .fee_algo(CardanoWasm.LinearFee.new(CardanoWasm.BigNum.from_str('44'), CardanoWasm.BigNum.from_str('155381')))
+      .coins_per_utxo_word(CardanoWasm.BigNum.from_str('34482'))
+      .pool_deposit(CardanoWasm.BigNum.from_str('500000000'))
+      .key_deposit(CardanoWasm.BigNum.from_str('2000000'))
       .max_value_size(5000)
       .max_tx_size(16384)
-      .build()
+      .build(),
   );
 
   const scripts = CardanoWasm.NativeScripts.new();
 
-  const policyKeyHash = CardanoWasm.BaseAddress.from_address(policyAddr)
-    .payment_cred()
-    .to_keyhash();
+  const policyKeyHash = CardanoWasm.BaseAddress.from_address(policyAddr).payment_cred().to_keyhash();
 
-  console.log(
-    `POLICY_KEYHASH: ${Buffer.from(policyKeyHash.to_bytes()).toString("hex")}`
-  );
+  console.log(`POLICY_KEYHASH: ${Buffer.from(policyKeyHash.to_bytes()).toString('hex')}`);
 
   // add key hash script so only people with policy key can mint assets using this policyId
-  const keyHashScript = CardanoWasm.NativeScript.new_script_pubkey(
-    CardanoWasm.ScriptPubkey.new(policyKeyHash)
-  );
+  const keyHashScript = CardanoWasm.NativeScript.new_script_pubkey(CardanoWasm.ScriptPubkey.new(policyKeyHash));
   scripts.add(keyHashScript);
 
   const policyTtl = policy.ttl || ttl;
@@ -103,9 +90,7 @@ const mintNft = async (
   const timelockScript = CardanoWasm.NativeScript.new_timelock_expiry(timelock);
   scripts.add(timelockScript);
 
-  const mintScript = CardanoWasm.NativeScript.new_script_all(
-    CardanoWasm.ScriptAll.new(scripts)
-  );
+  const mintScript = CardanoWasm.NativeScript.new_script_all(CardanoWasm.ScriptAll.new(scripts));
 
   /* mintScript can be a single script instead of an array of scripts
   const mintScript = CardanoWasm.NativeScript.new_script_pubkey(
@@ -113,22 +98,20 @@ const mintNft = async (
   );
   */
 
-  const privKeyHash = CardanoWasm.BaseAddress.from_address(addr)
-    .payment_cred()
-    .to_keyhash();
+  const privKeyHash = CardanoWasm.BaseAddress.from_address(addr).payment_cred().to_keyhash();
   txBuilder.add_key_input(
     privKeyHash,
     CardanoWasm.TransactionInput.new(
-      CardanoWasm.TransactionHash.from_bytes(Buffer.from(utxo.tx_hash, "hex")),
-      utxo.tx_index
+      CardanoWasm.TransactionHash.from_bytes(Buffer.from(utxo.tx_hash, 'hex')),
+      utxo.tx_index,
     ),
-    CardanoWasm.Value.new(CardanoWasm.BigNum.from_str(utxo.amount))
+    CardanoWasm.Value.new(CardanoWasm.BigNum.from_str(utxo.amount)),
   );
-  
+
   //const receiver = "addr_test1qp5u4p74tpx2m87ddmfk4gzm2j2nmlrterxagtrytwtzupzkujqk4kx4fmgcyfkxk0ap0uv043cnl44v7g9s9kz4lr7sz4c8tx";
   const receiver = CardanoWasm.Address.from_bech32(receiverAddr);
 
-  const policyId = Buffer.from(mintScript.hash().to_bytes()).toString("hex");
+  const policyId = Buffer.from(mintScript.hash().to_bytes()).toString('hex');
 
   console.log(`POLICY_ID: ${policyId}`);
 
@@ -145,19 +128,26 @@ const mintNft = async (
   //   },
   // };
 
-  const context = createMetadata(policyId, assetNamePfx, description, mediaType);
+  const context = await createMetadata(
+    countOfNftsInTxn, // max NFTs in one txn
+    policyId,
+    assetNamePfx,
+    description,
+    mediaType,
+    filePathIPFS,
+  );
   const metadata = context.metadataObj;
   const countNFT = context.countNFT;
 
   console.log(`METADATA: ${JSON.stringify(metadata, null, 2)}`);
 
-  for (let i=0; i<countNFT; i++){
+  for (let i = 0; i < countNFT; i++) {
     let assetName = `${assetNamePfx}${i}`;
     txBuilder.add_mint_asset_and_output_min_required_coin(
       mintScript,
       CardanoWasm.AssetName.new(Buffer.from(assetName)),
       CardanoWasm.Int.new_i32(1),
-      CardanoWasm.TransactionOutputBuilder.new().with_address(receiver).next()
+      CardanoWasm.TransactionOutputBuilder.new().with_address(receiver).next(),
     );
   }
 
@@ -167,17 +157,14 @@ const mintNft = async (
   console.log(`TX_TTL: ${txTtl}`);
 
   txBuilder.set_ttl(txTtl);
-  txBuilder.add_json_metadatum(
-    CardanoWasm.BigNum.from_str("721"),
-    JSON.stringify(metadata)
-  );
+  txBuilder.add_json_metadatum(CardanoWasm.BigNum.from_str('721'), JSON.stringify(metadata));
 
   txBuilder.add_change_if_needed(addr);
 
   const txBody = txBuilder.build();
   const txHash = CardanoWasm.hash_transaction(txBody);
 
-  console.log(`TX_HASH: ${Buffer.from(txHash.to_bytes()).toString("hex")}`);
+  console.log(`TX_HASH: ${Buffer.from(txHash.to_bytes()).toString('hex')}`);
 
   // sign the tx using the policy key and main key
   const witnesses = CardanoWasm.TransactionWitnessSet.new();
@@ -193,67 +180,69 @@ const mintNft = async (
   const unsignedTx = txBuilder.build_tx();
 
   // create signed transaction
-  const tx = CardanoWasm.Transaction.new(
-    unsignedTx.body(),
-    witnesses,
-    unsignedTx.auxiliary_data()
-  );
+  const tx = CardanoWasm.Transaction.new(unsignedTx.body(), witnesses, unsignedTx.auxiliary_data());
 
-  const signedTx = Buffer.from(tx.to_bytes()).toString("base64");
+  const signedTx = Buffer.from(tx.to_bytes()).toString('base64');
 
   // submit the transaction using yoroi backend
   try {
-    const { data } = await axios.post(
-      "https://testnet-backend.yoroiwallet.com/api/txs/signed",
-      {
-        signedTx,
-      }
-    );
+    const {data} = await axios.post('https://testnet-backend.yoroiwallet.com/api/txs/signed', {
+      signedTx,
+    });
 
     console.log(`SUBMIT_RESULT: ${JSON.stringify(data, null, 4)}`);
   } catch (error) {
     console.error(
       `failed to submit tx via yoroi backend: ${error.toString()}. error details: ${JSON.stringify(
-        error.response?.data
-      )}`
+        error.response?.data,
+      )}`,
     );
   }
 };
 
+export async function submitMintBatch(
+  assetNamePfx,
+  description,
+  imageType,
+  receiverAddr,
+  pvtKeyAddr,
+  countOfNftsInTxn,
+  filePathIPFS,
+) {
+  try {
+    // const privateKey = CardanoWasm.PrivateKey.from_normal_bytes(
+    //   cbor.decodeFirstSync(
+    //     "58209da681125617618d533b3cedb7491d039cd84daa3c59aff66c9c436825204d40"
+    //   )
+    // );
 
-try {
-   const privateKey = CardanoWasm.PrivateKey.from_normal_bytes(
-    cbor.decodeFirstSync(
-      "58209da681125617618d533b3cedb7491d039cd84daa3c59aff66c9c436825204d40"
-    )
-  );
+    const privateKey = CardanoWasm.PrivateKey.from_bech32(pvtKeyAddr);
 
-  
-  console.log(`PRIVATE KEY: ${privateKey.to_bech32()}`);
+    console.log(`PRIVATE KEY: ${privateKey.to_bech32()}`);
 
-  // import policy key from a .skey file
-  const policyPrivateKey = CardanoWasm.PrivateKey.from_normal_bytes(
-    cbor.decodeFirstSync(
-      "58209fef70dadfafbbfdc5d939ac9a3822efa52cb17eb8f60c1a4878a4ccc02414f6"
-    )
-  );
+    // import policy key from a .skey file
+    const policyPrivateKey = CardanoWasm.PrivateKey.from_normal_bytes(
+      cbor.decodeFirstSync('58209fef70dadfafbbfdc5d939ac9a3822efa52cb17eb8f60c1a4878a4ccc02414f6'),
+    );
 
-  console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
+    console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
 
-  await mintNft(
-    privateKey, // main key
-    {
-      privateKey: policyPrivateKey, // policy key
-      // pass null here to get automatic ttl for policy
-      // and paste the POLICY_TTL output you get in console to here to mint with same policy
-      ttl: null, // policy ttl
-    },
-    "KATE_Ser1_", // assetName Prefix. will be appended by 1,2,3,...
-    "An example description", // description
-    "image/png", // mediaType
-    "addr_test1qq5vsh0jmf8wws5lmds77fuq06jf4vummsmkyq5azjfsc6wg42pclf2zm5csxpfnxl8xctuv5dvy5r9lpx4hhn4v354sz5x6na" //receiver address//test1 wallet
-  );
-} catch (err) {
-  console.error(`failed to mint nft: ${err.toString()}`);
+    await mintNft(
+      privateKey, // main key
+      {
+        privateKey: policyPrivateKey, // policy key
+        // pass null here to get automatic ttl for policy
+        // and paste the POLICY_TTL output you get in console to here to mint with same policy
+        ttl: null, // policy ttl
+      },
+      assetNamePfx, // assetName Prefix. will be appended by 1,2,3,...
+      description, // description
+      imageType, // mediaType
+      receiverAddr, //receiver address//test1 wallet
+      countOfNftsInTxn, //no of nfts that should be in 1 txn
+      filePathIPFS,
+    );
+  } catch (err) {
+    console.error(`failed to mint nft: ${err.toString()}`);
+  }
 }
-
