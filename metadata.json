@@ -1,333 +1,147 @@
 {
-  "3f653be50636c6a24240413688eba2490679dea4b1bab4fbb9e17d1f": {
-    "Krimps_Ser1_0": {
-      "name": "Krimps_Ser1_0",
+  "d81374a022447420cd32407987c36d8b3739d8a92cb393c9071f558f": {
+    "OZ_Ser0_0": {
+      "name": "OZ_Ser0_0",
       "description": "An example description",
-      "image": "ipfs://QmPsmF8uf3kG4iKCmKtFUxZvbjHx693NvumYVwmxan9onc",
+      "image": "ipfs://QmSJ1JPjx4WZGZcnPYjKNb35bsnzbYQxfeUhnALzx98V9T",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_1": {
-      "name": "Krimps_Ser1_1",
+    "OZ_Ser0_1": {
+      "name": "OZ_Ser0_1",
       "description": "An example description",
-      "image": "ipfs://QmbX54qxM4ivLSq34p8hbbNh4Qi8GdNWuNf8rwxWbyt8dh",
+      "image": "ipfs://Qmcv6tg9dY3rn8g7jCBUvxqREnfjHgUe2CApKq43JvcYgC",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_2": {
-      "name": "Krimps_Ser1_2",
+    "OZ_Ser0_2": {
+      "name": "OZ_Ser0_2",
       "description": "An example description",
-      "image": "ipfs://QmeeuhqPQUfn5A75X8bfxRmrz2fxUicDhVNSeMKyYjXcgn",
+      "image": "ipfs://QmYeE3NTA6tsnsaAiX886PZ94L1JDgKcYL6xXHb6gJU3mG",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_3": {
-      "name": "Krimps_Ser1_3",
+    "OZ_Ser0_3": {
+      "name": "OZ_Ser0_3",
       "description": "An example description",
-      "image": "ipfs://QmZNzPWADJ43N2uJW2VS4H3b5ZGFvKB4WAWrh13uE4nHtN",
+      "image": "ipfs://QmUw7eQag7iN6fRrqLwnDhNScfkHBvvbRxtqtqVAqpnXvc",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_4": {
-      "name": "Krimps_Ser1_4",
+    "OZ_Ser0_4": {
+      "name": "OZ_Ser0_4",
       "description": "An example description",
-      "image": "ipfs://QmWGVeZmK6aMid5S2KABfg7kJwnZ1bczSkz1S7Uujrvbpd",
+      "image": "ipfs://QmX7aWgjRsaVfHsrETakVkSAZcyynozVYAhKzQnigVt95E",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_5": {
-      "name": "Krimps_Ser1_5",
+    "OZ_Ser0_5": {
+      "name": "OZ_Ser0_5",
       "description": "An example description",
-      "image": "ipfs://QmckbpwX2X1K8TskYGu9X4SQeeQY8MfQjnFFu5Ln3SQRcB",
+      "image": "ipfs://QmfDAneoREj4RYxoie1LEKJHgtURVhkXNQNiz947zYYzgS",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_6": {
-      "name": "Krimps_Ser1_6",
+    "OZ_Ser0_6": {
+      "name": "OZ_Ser0_6",
       "description": "An example description",
-      "image": "ipfs://QmdMwT9vS3q4JpaUhZLUbv7EVhVAmSLU88eL4XYu3yFQBi",
+      "image": "ipfs://QmfP863Fc5AcgEHhYktbXc7HLfHMHBgDxfiKwgGDcCV6qj",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_7": {
-      "name": "Krimps_Ser1_7",
+    "OZ_Ser0_7": {
+      "name": "OZ_Ser0_7",
       "description": "An example description",
-      "image": "ipfs://QmeEU9raoraTJt3zMQaLSJ8pUVZrGcitugQrWxBxh7XuZK",
+      "image": "ipfs://Qmd3Qv2qpcrLzqMN2vMEs1aKFV3q3m3X8SiDwtXWCJ2Fk6",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_8": {
-      "name": "Krimps_Ser1_8",
+    "OZ_Ser0_8": {
+      "name": "OZ_Ser0_8",
       "description": "An example description",
-      "image": "ipfs://QmT2JfiFx5ARKB7MJHo7qvfwTCf225cbeFtqZtmBKqLAGQ",
+      "image": "ipfs://QmULoLsWGVd9Aswii82wPAh92KPZiBuJ1FzykoJi3nKrcY",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_9": {
-      "name": "Krimps_Ser1_9",
+    "OZ_Ser0_9": {
+      "name": "OZ_Ser0_9",
       "description": "An example description",
-      "image": "ipfs://QmPrq1YGVqG95oXwfoQmzUBCcXG8v9N1frnnsRQob1Umju",
+      "image": "ipfs://QmcQKwvTpA6JngiDZRHXewgt4rUpDac61hRJNCf5qyPbUX",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_10": {
-      "name": "Krimps_Ser1_10",
+    "OZ_Ser0_10": {
+      "name": "OZ_Ser0_10",
       "description": "An example description",
-      "image": "ipfs://QmcRyeDYiPWp8pTfcfYXuj8ZjaQzvfLgekQr6ngEbySGxx",
+      "image": "ipfs://QmevZzo6pBsZkT3gtUkphqvjuS9MkxMFizVwvgdsWNH5fQ",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_11": {
-      "name": "Krimps_Ser1_11",
+    "OZ_Ser0_11": {
+      "name": "OZ_Ser0_11",
       "description": "An example description",
-      "image": "ipfs://QmaHryugVXRanzLmWet5Pd2dn9XcEJXJCzP7qjZxp9TmsU",
+      "image": "ipfs://QmcHXnQWAAPmTWhoC2KCoD1mS2wZMhuh28Y74aChUPkCKp",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_12": {
-      "name": "Krimps_Ser1_12",
+    "OZ_Ser0_12": {
+      "name": "OZ_Ser0_12",
       "description": "An example description",
-      "image": "ipfs://QmW4tvKVfhzvFzVwzy4Zcf8C9RYJsQSohthJtTHqJfuDFD",
+      "image": "ipfs://QmYr7nZoL6Qaj7tnLXzsSLh65Dq2i4CwFYkVFhwhS9kYML",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_13": {
-      "name": "Krimps_Ser1_13",
+    "OZ_Ser0_13": {
+      "name": "OZ_Ser0_13",
       "description": "An example description",
-      "image": "ipfs://QmTZ9HBM76m2Jdd34cDP2STSv7vhSkTrNGVk7SHr8D7y5Q",
+      "image": "ipfs://QmU18iEQsp9UgqdX8Pvm9sWEbetHd4DDMA56AbvuL9V88R",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_14": {
-      "name": "Krimps_Ser1_14",
+    "OZ_Ser0_14": {
+      "name": "OZ_Ser0_14",
       "description": "An example description",
-      "image": "ipfs://QmRCef7UAH5UHeLoo8SpnYGwt2xNUdX18k5tNY3AaWvaJK",
+      "image": "ipfs://QmZQGKCAVvrQTVnvGWXrAMwP4uztPXD4Kcs9ZgUB27Hzb5",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_15": {
-      "name": "Krimps_Ser1_15",
+    "OZ_Ser0_15": {
+      "name": "OZ_Ser0_15",
       "description": "An example description",
-      "image": "ipfs://QmPoVXvhNkYsiS9d1F4AGgPTQXK668Y5YwH3awzUWpkYVN",
+      "image": "ipfs://QmPWBnugNXBgEKNAqTwmV9K3Rouubo39goWHCJL7H5XG6f",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_16": {
-      "name": "Krimps_Ser1_16",
+    "OZ_Ser0_16": {
+      "name": "OZ_Ser0_16",
       "description": "An example description",
-      "image": "ipfs://QmSo2SVrDeyHutZxNt41F76BYqFZd4gs2Wv5FQT1wf6EV4",
+      "image": "ipfs://QmfASVqKans4YCfyEGh99Tf8eQb1YH9tkJykv1PcHd5vbo",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_17": {
-      "name": "Krimps_Ser1_17",
+    "OZ_Ser0_17": {
+      "name": "OZ_Ser0_17",
       "description": "An example description",
-      "image": "ipfs://QmYdcxy4iDDtpu4PvPooJfCVuviEpqhVUhKj84WRrSKJ6g",
+      "image": "ipfs://QmZP97KWZGrEohcbNv4uwEzaKBTqEC43ZKrozcKigRjosY",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_18": {
-      "name": "Krimps_Ser1_18",
+    "OZ_Ser0_18": {
+      "name": "OZ_Ser0_18",
       "description": "An example description",
-      "image": "ipfs://QmXjzBnfBAhaXrbmjeiMwjevZzajvmuVbBYU6hCafovwJS",
+      "image": "ipfs://QmQFSVa3wFcSNXkyKV9fc2yfUxtsvca8WkAekcEVknsUZ4",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_19": {
-      "name": "Krimps_Ser1_19",
+    "OZ_Ser0_19": {
+      "name": "OZ_Ser0_19",
       "description": "An example description",
-      "image": "ipfs://QmTs1JrQbDQ4zM8HGAZzNEvZdSusKuvxzu9o1bh4n4exup",
+      "image": "ipfs://Qmb76T7PSB4JU48MSmJdqygVwAGcrmyKTwZZhEdawpgdBw",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_20": {
-      "name": "Krimps_Ser1_20",
+    "OZ_Ser0_20": {
+      "name": "OZ_Ser0_20",
       "description": "An example description",
-      "image": "ipfs://QmRmsBxb5j91cz6wbZ7rY5YnffGtDAmsjNoMXsAHWwDuD3",
+      "image": "ipfs://QmamErZD1yJ2NEtvvvCtxcKv3DiFD75Y87yu6MddvRWRWL",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_21": {
-      "name": "Krimps_Ser1_21",
+    "OZ_Ser0_21": {
+      "name": "OZ_Ser0_21",
       "description": "An example description",
-      "image": "ipfs://QmW2XfzeBc8ECf4zds6WRS5HHtFCgfYhCaXurJV5SXkXJZ",
+      "image": "ipfs://QmUiFTZV9NHKRBhWFKXFmwch68ehUB2ZHgxWsR6mL9k54v",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_22": {
-      "name": "Krimps_Ser1_22",
+    "OZ_Ser0_22": {
+      "name": "OZ_Ser0_22",
       "description": "An example description",
-      "image": "ipfs://QmYysGh27TS2R6MaHDrdEKKjwZQdLvEm5gH7EtRQjjnRPQ",
+      "image": "ipfs://Qmb1ChMvmhgmyoAUhupRXFiArZ82sLwpaCKkxWxBciaKS7",
       "mediaType": "image/png"
     },
-    "Krimps_Ser1_23": {
-      "name": "Krimps_Ser1_23",
+    "OZ_Ser0_23": {
+      "name": "OZ_Ser0_23",
       "description": "An example description",
-      "image": "ipfs://QmTW7URJahA6YFLCBGaEQodUCdk7bfYyRM5oBTkqdjJLKW",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_24": {
-      "name": "Krimps_Ser1_24",
-      "description": "An example description",
-      "image": "ipfs://QmbRqcCXcdFMfHojbKWCRwq6fGU6uXq6Hyqg9opZySZUVa",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_25": {
-      "name": "Krimps_Ser1_25",
-      "description": "An example description",
-      "image": "ipfs://QmcCipsLDgiM2v2VYNkuBboAP3Ud1mMdBwEdFnZiEGTuXt",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_26": {
-      "name": "Krimps_Ser1_26",
-      "description": "An example description",
-      "image": "ipfs://QmXftcXx6wxzdVbcYv3SF3MFJpj8DoVR8FqHdLJorDJ1MG",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_27": {
-      "name": "Krimps_Ser1_27",
-      "description": "An example description",
-      "image": "ipfs://QmRYiVnft75SsFppR58BXQ1GPz5DFwuqtVcDVA3YJEnLDU",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_28": {
-      "name": "Krimps_Ser1_28",
-      "description": "An example description",
-      "image": "ipfs://QmUntQwJA6FEiKxZ1BdtrrEHJWhaJmSzanQWmCf4kh4pao",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_29": {
-      "name": "Krimps_Ser1_29",
-      "description": "An example description",
-      "image": "ipfs://QmcNVppZCHyGL7RkC9fK5YowLx5DK7m4pjrYX65ma3oHFC",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_30": {
-      "name": "Krimps_Ser1_30",
-      "description": "An example description",
-      "image": "ipfs://QmeXvJCXTuT4UT4ZJSvdfXdeVipP7AuSPiTmfcXXiuGJus",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_31": {
-      "name": "Krimps_Ser1_31",
-      "description": "An example description",
-      "image": "ipfs://QmPJdHnGLNxAt8TbuBxHVRwa89deRCH4gm2aLPWyWozwcF",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_32": {
-      "name": "Krimps_Ser1_32",
-      "description": "An example description",
-      "image": "ipfs://QmV9KTqDci4UC3pA4RPUap7AyMByKNmL77JrA2Z8EAY5rR",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_33": {
-      "name": "Krimps_Ser1_33",
-      "description": "An example description",
-      "image": "ipfs://QmU9qoYUmKy1Xwisi5s6PHet1mnKWoNEGP7ZCykrk9U676",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_34": {
-      "name": "Krimps_Ser1_34",
-      "description": "An example description",
-      "image": "ipfs://QmTotPyuGdyJZinLHs5fF6Px6oa5o8cMaAAfY95Y4drDii",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_35": {
-      "name": "Krimps_Ser1_35",
-      "description": "An example description",
-      "image": "ipfs://QmaF1gnRmUTbT4bX8MTLXyXekGAn5C8dbdoiN1CBZkpDPa",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_36": {
-      "name": "Krimps_Ser1_36",
-      "description": "An example description",
-      "image": "ipfs://QmeT7hJqvNAwd1J4E38H3cuU8hRqLZh6zjKHRN5tojE61J",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_37": {
-      "name": "Krimps_Ser1_37",
-      "description": "An example description",
-      "image": "ipfs://QmVK3UsKMU4U82ptuWqPJDsGvaJKP1ciGN25DUpKNtUTzN",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_38": {
-      "name": "Krimps_Ser1_38",
-      "description": "An example description",
-      "image": "ipfs://QmfE6qJFqDTpzq3CPq8VGxsFFCX1mAEhx84fX7XQmnHwvT",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_39": {
-      "name": "Krimps_Ser1_39",
-      "description": "An example description",
-      "image": "ipfs://QmbpgEVdqCghV58QtAs2z1Gkz9fa22v3dhW3pUnULxEi5W",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_40": {
-      "name": "Krimps_Ser1_40",
-      "description": "An example description",
-      "image": "ipfs://QmPLnRAYL5kLEaVECHRUJLonkzRQGHnuC9vPqPHVHdgwXB",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_41": {
-      "name": "Krimps_Ser1_41",
-      "description": "An example description",
-      "image": "ipfs://QmYxqx6xYeamwb2ngBSnSdW3cP2zAngxKYKst7RFmRDFfd",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_42": {
-      "name": "Krimps_Ser1_42",
-      "description": "An example description",
-      "image": "ipfs://QmRsUrDigbab8yx3ehtSzihnim5MYFeXwkjwsUpyNyL3LR",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_43": {
-      "name": "Krimps_Ser1_43",
-      "description": "An example description",
-      "image": "ipfs://QmTNVrq1FixKXPiSRxeMzvfJKT5pRu7NFHFiAYXPHL1tm5",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_44": {
-      "name": "Krimps_Ser1_44",
-      "description": "An example description",
-      "image": "ipfs://QmSXsmryS2uZrrdztKiZYVh6NkczksPdQNEYDEWJ7NNS8u",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_45": {
-      "name": "Krimps_Ser1_45",
-      "description": "An example description",
-      "image": "ipfs://QmXoJZC89tjxx4V352uY6fQNSTTJQcbwdNTagrj2HTfTVr",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_46": {
-      "name": "Krimps_Ser1_46",
-      "description": "An example description",
-      "image": "ipfs://QmVz7AwoTXYKtzT7WgngDvYDSCAyzobcFYj1f7vTsocFEc",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_47": {
-      "name": "Krimps_Ser1_47",
-      "description": "An example description",
-      "image": "ipfs://QmYfXRgPgMArJaS9qc7hNfRkeXss5s65evqS5r9oXKBfNr",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_48": {
-      "name": "Krimps_Ser1_48",
-      "description": "An example description",
-      "image": "ipfs://QmS1ZmspuhjYC4exj9bsacq4iBjQx1ESidKSbU2UF1TKEq",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_49": {
-      "name": "Krimps_Ser1_49",
-      "description": "An example description",
-      "image": "ipfs://QmbqS5zRHREouvMzLc8aEzG5bYJgcUwBJ1sCUywei6Vytg",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_50": {
-      "name": "Krimps_Ser1_50",
-      "description": "An example description",
-      "image": "ipfs://QmXjabdQnch8ZA2VAk3ZE4CugCzjw4wzMgHRfrF2h9LD7e",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_51": {
-      "name": "Krimps_Ser1_51",
-      "description": "An example description",
-      "image": "ipfs://QmVB3JTahxsm7yi6HXBNQtV1irGrAfajxEDdJ7iRRfPDcK",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_52": {
-      "name": "Krimps_Ser1_52",
-      "description": "An example description",
-      "image": "ipfs://QmTfmSWrSZhf2eLGT5Zf6CVYQYvaFPz6e9xixDXjdZ6ung",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_53": {
-      "name": "Krimps_Ser1_53",
-      "description": "An example description",
-      "image": "ipfs://QmRqtwfawjXFGiCBQTibK8nBep5YhRZxyMap58kMkYBy12",
-      "mediaType": "image/png"
-    },
-    "Krimps_Ser1_54": {
-      "name": "Krimps_Ser1_54",
-      "description": "An example description",
-      "image": "ipfs://QmZcFExm7a2mtrrXG6ocY2QK6akm9rTmSpbUMASPJqtaVd",
+      "image": "ipfs://QmWJMVxieueYnPXDvZQDWt8BvfX9QhETYwwm1khCBS5szQ",
       "mediaType": "image/png"
     }
   }

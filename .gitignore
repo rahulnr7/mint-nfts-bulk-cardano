@@ -1,3 +1,5 @@
 /node_modules/
 metadata.json
+*.txt
+/images
 log.txt
