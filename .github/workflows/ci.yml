@@ -26,4 +26,4 @@ jobs:
         run: npm i
         
       - name: Check code standards
-        run: npm run fmt:check && npm run lint
+        run: npm run fmt:check
