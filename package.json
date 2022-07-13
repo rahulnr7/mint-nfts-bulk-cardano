@@ -6,8 +6,7 @@
   "scripts": {
     "fmt": "prettier --write \"**/*.js\"",
     "mint": "node index.js",
-    "mintBulk" : "node mintNFTsmMain.js"
-
+    "mintbulk": "node mintNFTsmMain.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +14,7 @@
     "@emurgo/cardano-serialization-lib-nodejs": "^10.0.4",
     "axios": "^0.26.1",
     "cbor": "^8.1.0",
+    "eslint": "^8.19.0",
     "mime": "^3.0.0",
     "nft.storage": "^6.4.0",
     "path": "^0.12.7"
