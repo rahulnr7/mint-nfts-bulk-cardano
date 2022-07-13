@@ -6,7 +6,8 @@
   "scripts": {
     "fmt": "prettier --write \"**/*.js\"",
     "mint": "node index.js",
-    "mintbulk": "node mintNFTsmMain.js"
+    "mintbulk": "node mintNFTsmMain.js",
+    "fmt:check": "prettier --check e2e"
   },
   "author": "",
   "license": "ISC",
