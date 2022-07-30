@@ -42,6 +42,7 @@ export async function dataCleanUpIpfsFileByCount(filePath, count) {
   }
   const strOut = str.join('\n');
   fs.writeFileSync(filePath, strOut);
+  console.log('\x1b[31m%s\x1b[0m', 'IPFS file deleted by 50')
 }
 
 export const lineArr = async (filePath) => {

@@ -12,10 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@emurgo/cardano-serialization-lib-nodejs": "^10.0.4",
+    "@emurgo/cardano-serialization-lib-nodejs": "^11.0.0",
     "axios": "^0.26.1",
     "cbor": "^8.1.0",
     "eslint": "^8.19.0",
+    "files-from-path": "^0.2.6",
+    "ipfs": "^0.63.5",
     "mime": "^3.0.0",
     "nft.storage": "^6.4.0",
     "path": "^0.12.7"

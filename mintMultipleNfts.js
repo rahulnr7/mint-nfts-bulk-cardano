@@ -53,7 +53,7 @@ const mintNft = async (
     throw new Error('no utxo found with sufficient ADA.');
   }
 
-  console.log(`UTXO: ${JSON.stringify(utxo, null, 4)}`);
+  //console.log(`UTXO: ${JSON.stringify(utxo, null, 4)}`);
 
   // get current global slot from yoroi backend
   const {data: slotData} = await axios.get('https://testnet-backend.yoroiwallet.com/api/v2/bestblock');
@@ -139,7 +139,7 @@ const mintNft = async (
   const metadata = context.metadataObj;
   const countNFT = context.countNFT;
 
-  console.log(`METADATA: ${JSON.stringify(metadata, null, 2)}`);
+  //console.log(`METADATA: ${JSON.stringify(metadata, null, 2)}`);
 
   for (let i = 0; i < countNFT; i++) {
     let assetName = `${assetNamePfx}${i}`;
@@ -189,8 +189,8 @@ const mintNft = async (
     const {data} = await axios.post('https://testnet-backend.yoroiwallet.com/api/txs/signed', {
       signedTx,
     });
-
-    console.log(`SUBMIT_RESULT: ${JSON.stringify(data, null, 4)}`);
+    console.log('\x1b[32m%s\x1b[0m', `SUBMIT_RESULT: ${JSON.stringify(data, null, 4)}`);
+    return true;
   } catch (error) {
     console.error(
       `failed to submit tx via yoroi backend: ${error.toString()}. error details: ${JSON.stringify(
@@ -227,7 +227,7 @@ export async function submitMintBatch(
 
     console.log(`POLICY_PRIV_KEY: ${policyPrivateKey.to_bech32()}`);
 
-    await mintNft(
+    const done = await mintNft(
       privateKey, // main key
       {
         privateKey: policyPrivateKey, // policy key
@@ -242,6 +242,7 @@ export async function submitMintBatch(
       countOfNftsInTxn, //no of nfts that should be in 1 txn
       filePathIPFS,
     );
+    return done;
   } catch (err) {
     console.error(`failed to mint nft: ${err.toString()}`);
   }
