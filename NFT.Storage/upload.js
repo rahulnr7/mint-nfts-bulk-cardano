@@ -22,10 +22,10 @@ const NFT_STORAGE_KEY = constants.NFT_STORAGE_KEY;
  * @param {string} description a text description for the NFT
  */
 
-const filePath = '/Users/rahulnair/projects/cardano-mint-nft/images/s_Img.jpeg';
 async function storeNFT(imagePath, name, description) {
   // load the file from disk
   const image = await fileFromPath(imagePath);
+  console.log('Image ',image);
 
   // create a new NFTStorage client using our API key
   const nftstorage = new NFTStorage({token: NFT_STORAGE_KEY});
