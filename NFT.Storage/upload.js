@@ -25,7 +25,7 @@ const NFT_STORAGE_KEY = constants.NFT_STORAGE_KEY;
 async function storeNFT(imagePath, name, description) {
   // load the file from disk
   const image = await fileFromPath(imagePath);
-  console.log('Image ',image);
+  console.log('Image ', image);
 
   // create a new NFTStorage client using our API key
   const nftstorage = new NFTStorage({token: NFT_STORAGE_KEY});

@@ -32,7 +32,6 @@ const lines = await utils.lineArr(filePathKeyAddr);
       filePathIPFS,
     );
 
-    if (minted == true)
-    await utils.dataCleanUpIpfsFileByCount(filePathIPFS, countOfNftsInTxn);
+    if (minted == true) await utils.dataCleanUpIpfsFileByCount(filePathIPFS, countOfNftsInTxn);
   }
 })();
