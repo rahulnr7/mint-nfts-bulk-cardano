@@ -1,29 +1,28 @@
-import { NFTStorage } from 'nft.storage'
-import { filesFromPath } from 'files-from-path'
-import path from 'path'
+import {NFTStorage} from 'nft.storage';
+import {filesFromPath} from 'files-from-path';
+import path from 'path';
 import * as constants from '../data/constants.js';
 
-const token = constants.NFT_STORAGE_KEY
+const token = constants.NFT_STORAGE_KEY;
 
 async function main() {
   // you'll probably want more sophisticated argument parsing in a real app
   if (process.argv.length !== 3) {
-    console.error(`usage: ${process.argv[0]} ${process.argv[1]} <directory-path>`)
+    console.error(`usage: ${process.argv[0]} ${process.argv[1]} <directory-path>`);
   }
-  const directoryPath = process.argv[2]
+  const directoryPath = process.argv[2];
   const files = filesFromPath(directoryPath, {
     pathPrefix: path.resolve(directoryPath), // see the note about pathPrefix below
     hidden: true, // use the default of false if you want to ignore files that start with '.'
-  })
+  });
 
-  const storage = new NFTStorage({ token })
+  const storage = new NFTStorage({token});
 
-  console.log(`storing file(s) from ${path}`)
-  const cid = await storage.storeDirectory(files)
-  console.log({ cid })
+  console.log(`storing file(s) from ${path}`);
+  const cid = await storage.storeDirectory(files);
+  console.log({cid});
 
-  const status = await storage.status(cid)
-  console.log(status)
+  const status = await storage.status(cid);
+  console.log(status);
 }
-main()
-
+main();
